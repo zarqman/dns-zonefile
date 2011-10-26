@@ -1,8 +1,4 @@
-source :rubygems
+source "http://rubygems.org"
 
-gem 'treetop'
-gem 'polyglot'
-
-group :test do
-  gem 'rspec'
-end
+# Specify your gem's dependencies in dns-zonefile.gemspec
+gemspec
