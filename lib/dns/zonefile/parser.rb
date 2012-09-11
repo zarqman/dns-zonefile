@@ -2408,11 +2408,16 @@ module DNS
           s1 << r2
           if r2
             if has_terminal?(".", false, index)
-              r6 = instantiate_node(SyntaxNode,input, index...(index + 1))
+              r7 = instantiate_node(SyntaxNode,input, index...(index + 1))
               @index += 1
             else
               terminal_parse_failure(".")
-              r6 = nil
+              r7 = nil
+            end
+            if r7
+              r6 = r7
+            else
+              r6 = instantiate_node(SyntaxNode,input, index...index)
             end
             s1 << r6
           end
