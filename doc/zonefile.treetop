@@ -121,7 +121,7 @@ grammar Zonefile
   end
 
   rule cname_record
-    host space ttl klass "CNAME" space target:host {
+    host space ttl klass "CNAME" space target:content_host {
       def to_s
         "#{host} #{ttl} #{klass} CNAME #{target}"
       end
@@ -129,7 +129,7 @@ grammar Zonefile
   end
 
   rule mx_record
-    host space ttl klass "MX" space priority:integer space exchanger:host {
+    host space ttl klass "MX" space priority:integer space exchanger:content_host {
       def to_s
         "#{host} #{ttl} #{klass} MX #{priority} #{exchanger}"
       end
@@ -373,6 +373,21 @@ grammar Zonefile
           text_value
         else
           text_value + '.@'
+        end
+      end
+    }
+  end
+
+  rule content_host
+    ( ([*a-zA-Z0-9\-\._]+) / "@" / ' ' / "\t" ) {
+      def to_s
+        case text_value
+        when /\.$/
+          text_value
+        when "@", /\s/
+          text_value
+        else
+          text_value + '.'
         end
       end
     }

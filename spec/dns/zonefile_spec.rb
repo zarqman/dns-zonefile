@@ -45,14 +45,14 @@ ns            A     10.0.0.2              ; ip address for "ns.example.com"
 with-class   IN  A   10.0.0.3             ; record that includes the class type of IN
 with-ttl  60     A   10.0.0.5             ; with a specified TTL
 ttl-class 60 IN  A   10.0.0.6             ; with TTL and class type
-www           CNAME ns                    ; "www.example.com" is an alias for "ns.example.com"
-wwwtest       CNAME www                   ; "wwwtest.example.com" is another alias for "www.example.com"
+www           CNAME ns.example.com        ; "www.example.com" is an alias for "ns.example.com"
+wwwtest       CNAME www.example.com       ; "wwwtest.example.com" is another alias for "www.example.com"
 www2          CNAME ns.example.com.       ; yet another alias, with FQDN target
 
 ; Email... that'll be fun then
 example.com.  MX    10 mail.example.com.  ; mail.example.com is the mailserver for example.com
 @             MX    20 mail2.example.com. ; Similar to above line, but using "@" to say "use $ORIGIN"
-@             MX    50 mail3              ; Similar to above line, but using a host within this domain
+@             MX    50 mail3.example.com  ; Similar to above line with non-fully qualified content 
 
 @             AAAA  2001:db8:a::1         ; IPv6, lowercase
 ns            AAAA  2001:DB8:B::1         ; IPv6, uppercase
