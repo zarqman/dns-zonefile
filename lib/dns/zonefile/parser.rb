@@ -1961,6 +1961,96 @@ module DNS
         r0
       end
 
+      module UrlRecord0
+        def host
+          elements[0]
+        end
+
+        def space1
+          elements[1]
+        end
+
+        def ttl
+          elements[2]
+        end
+
+        def klass
+          elements[3]
+        end
+
+        def space2
+          elements[5]
+        end
+
+        def data
+          elements[6]
+        end
+      end
+
+      module UrlRecord1
+        def to_s
+          "#{host} #{ttl} #{klass} URL #{data}"
+        end
+      end
+
+      def _nt_url_record
+        start_index = index
+        if node_cache[:url_record].has_key?(index)
+          cached = node_cache[:url_record][index]
+          if cached
+            cached = SyntaxNode.new(input, index...(index + 1)) if cached == true
+            @index = cached.interval.end
+          end
+          return cached
+        end
+
+        i0, s0 = index, []
+        r1 = _nt_host
+        s0 << r1
+        if r1
+          r2 = _nt_space
+          s0 << r2
+          if r2
+            r3 = _nt_ttl
+            s0 << r3
+            if r3
+              r4 = _nt_klass
+              s0 << r4
+              if r4
+                if has_terminal?("URL", false, index)
+                  r5 = instantiate_node(SyntaxNode,input, index...(index + 3))
+                  @index += 3
+                else
+                  terminal_parse_failure("URL")
+                  r5 = nil
+                end
+                s0 << r5
+                if r5
+                  r6 = _nt_space
+                  s0 << r6
+                  if r6
+                    r7 = _nt_data
+                    s0 << r7
+                  end
+                end
+              end
+            end
+          end
+        end
+        if s0.last
+          r0 = instantiate_node(SyntaxNode,input, i0...index, s0)
+          r0.extend(UrlRecord0)
+          r0.extend(UrlRecord1)
+        else
+          @index = i0
+          r0 = nil
+        end
+
+        node_cache[:url_record][start_index] = r0
+
+        r0
+      end
+
       module Origin0
         def host
           elements[0]

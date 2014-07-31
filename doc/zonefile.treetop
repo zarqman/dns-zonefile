@@ -192,6 +192,14 @@ grammar Zonefile
     }
   end
 
+  rule url_record
+    host space ttl klass "URL" space data {
+      def to_s
+        "#{host} #{ttl} #{klass} URL #{data}"
+      end
+    }
+  end
+
   rule origin
     host comment* {
       def to_s
@@ -408,4 +416,5 @@ grammar Zonefile
       end
     }
   end
+
 end
