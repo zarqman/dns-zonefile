@@ -1,2 +1,3 @@
-lib/dns/zonefile_parser.rb
 *.gem
+.rvmrc
+samples

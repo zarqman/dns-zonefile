@@ -1,18 +1,31 @@
-$:.unshift File.dirname(__FILE__) + '/lib'
-require 'dns/zonefile'
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "dns/zonefile/version"
 
-spec = Gem::Specification.new do |s|
-  s.name = 'dns-zonefile'
-  s.version = DNS::Zonefile::VERSION
-  s.summary = "Parse and manipulate with DNS zonefiles."
-  s.description = %{Parse and manipulate with DNS zonefiles. Great for working with BIND.}
-  s.files = Dir['lib/**/*.rb'] + Dir['spec/**/*.rb']
-  s.require_path = 'lib'
-  s.autorequire = 'dns/zonefile'
-  s.has_rdoc = true
-  s.extra_rdoc_files = Dir['[A-Z]*'] + Dir['doc/**/*']
-  s.rdoc_options << '--title' <<  'DNS::Zonefile -- Work with zonefiles'
-  s.author = "Craig R Webster"
-  s.email = "craig@barkingiguana.com"
-  s.homepage = "http://barkingiguana.com/"
+Gem::Specification.new do |s|
+  s.name        = "dns-zonefile"
+  s.version     = DNS::Zonefile::VERSION
+  s.authors     = ["Craig R Webster"]
+  s.email       = ["craig@barkingiguana.com"]
+  s.homepage    = ""
+  s.summary     = %q{Work with zonefiles (RFC 1035 section 5 and RFC 1034 section 3.6.1)}
+  s.description = %q{The format of a DNS Zonefile is defined in RFC 1035 section 5 and RFC
+1034 section 3.6.1. To anyone who's using BIND they'll look very 
+familiar.
+
+This is an attempt to use Ruby parse them into an object graph which can 
+be investigated programatically, manipulated, validated or printed into 
+some canonical form.}
+
+  s.rubyforge_project = "dns-zonefile"
+
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.require_paths = ["lib"]
+
+  s.add_development_dependency "rspec", "= 2.6"
+  s.add_development_dependency "rake"
+  s.add_runtime_dependency "treetop"
+  s.add_runtime_dependency "polyglot"
 end
